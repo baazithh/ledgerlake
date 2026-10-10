@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: shop_pw
       POSTGRES_DB: shop
     ports:
-      - "5432:5432"
+      - "5433:5432"
     command: [ "postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=4", "-c", "max_wal_senders=4" ]
     volumes:
       - pgdata:/var/lib/postgresql/data
