@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: postgres:16
+    build: ./source
+    image: ledgerlake-pg:16
     container_name: ledgerlake-pg
     environment:
       POSTGRES_USER: shop
@@ -8,9 +9,10 @@ services:
       POSTGRES_DB: shop
     ports:
       - "5434:5432"
-    command: [ "postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=4", "-c", "max_wal_senders=4" ]
+    command: [ "postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=4", "-c", "max_wal_senders=4", "-c", "output_plugin_libraries=wal2json" ]
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./source/init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   pgdata:
+
